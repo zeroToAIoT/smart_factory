@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>환경 모니터링 대시보드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #2c3e50; color: white; text-align: center; padding-top: 50px; }
+        .card { background-color: #34495e; margin: 20px auto; padding: 30px; border-radius: 15px; width: 80%; max-width: 400px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .value { font-size: 40px; font-weight: bold; color: #f1c40f; margin: 10px 0; }
+        .label { font-size: 18px; color: #bdc3c7; }
+    </style>
+    <script>
+        // 1초(1000ms)마다 데이터를 새로고침 없이 가져오는 마법의 코드
+        setInterval(function() {
+            fetch('/api/sensor')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temp_value').innerText = data.temperature + " °C";
+                    document.getElementById('humid_value').innerText = data.humidity + " %";
+                })
+                .catch(error => console.log("데이터 수신 에러"));
+        }, 1000);
+    </script>
+</head>
+<body>
+    <h2>🏭 스마트 팩토리 환경 관제</h2>
+    
+    <div class="card">
+        <div class="label">현재 온도 (Temperature)</div>
+        <div class="value" id="temp_value">로딩 중...</div>
+    </div>
+    
+    <div class="card">
+        <div class="label">현재 습도 (Humidity)</div>
+        <div class="value" id="humid_value">로딩 중...</div>
+    </div>
+</body>
+</html>

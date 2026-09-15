@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AGV 무선 원격 제어</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        body { text-align: center; margin-top: 30px; font-family: sans-serif; background-color: #2c3e50; color: white; }
+        .btn { width: 80px; height: 80px; font-size: 30px; margin: 10px; border-radius: 15px; background-color: #3498db; color: white; border: none; font-weight: bold; }
+        .btn:active { background-color: #e74c3c; } /* 버튼을 누르면 빨간색으로 변경 */
+        .btn-stop { background-color: #95a5a6; }
+        table { margin: 0 auto; }
+    </style>
+    <script>
+        // 서버로 이동 명령을 몰래 보내는 함수
+        function sendCmd(cmd) {
+            fetch('/move/' + cmd);
+        }
+    </script>
+</head>
+<body>
+    <h2>🚀 AGV Remote Control</h2>
+    <p>버튼을 누르고 있는 동안만 이동합니다.</p>
+    
+    <!-- 십자 모양 방향키 배열 -->
+    <table>
+        <tr>
+            <td></td>
+            <td><button class="btn" 
+                onmousedown="sendCmd('forward')" onmouseup="sendCmd('stop')"
+                ontouchstart="sendCmd('forward')" ontouchend="sendCmd('stop')">▲</button></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><button class="btn" 
+                onmousedown="sendCmd('left')" onmouseup="sendCmd('stop')"
+                ontouchstart="sendCmd('left')" ontouchend="sendCmd('stop')">◀</button></td>
+            <td><button class="btn btn-stop" onclick="sendCmd('stop')">■</button></td>
+            <td><button class="btn" 
+                onmousedown="sendCmd('right')" onmouseup="sendCmd('stop')"
+                ontouchstart="sendCmd('right')" ontouchend="sendCmd('stop')">▶</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><button class="btn" 
+                onmousedown="sendCmd('backward')" onmouseup="sendCmd('stop')"
+                ontouchstart="sendCmd('backward')" ontouchend="sendCmd('stop')">▼</button></td>
+            <td></td>
+        </tr>
+    </table>
+</body>
+</html>
